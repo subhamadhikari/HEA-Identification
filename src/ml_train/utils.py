@@ -143,3 +143,64 @@ def perf_vs_size(model, X_pool, y_pool, X_test, y_test, csv_out,
         df.sort_index().to_csv(csv_out, index_label='frac')
 
     return df
+
+def plot_metrics_vs_size(metrics, metrics_name,id_train,
+                         xlims=None, ylims=None,
+                         figsize=(4,4),
+                         ax_in=None,
+                         fig_ax = None,
+                         markers=None
+                         ):
+    if fig_ax is not None:
+        fig, ax = fig_ax
+    elif ax_in is None:
+        fig, ax = plt.subplots(figsize=figsize)
+    else:
+        fig = ax_in.get_figure()
+        # get second y axis
+        ax = ax_in.twinx()
+
+
+    if markers is None:
+        markers = {'RF':'o',
+                   'XGB':'s'}
+        # markers = {'RF':'o',
+        #            'XGB':'s',
+        #            'alignn50':'^',}
+
+
+    for model_name in metrics.keys():
+        ax.errorbar(metrics[model_name].index, metrics[model_name][metrics_name],
+                    yerr=metrics[model_name][f'{metrics_name}_std'],
+                    fmt=f'-{markers[model_name]}',markersize=5,label=model_name, capsize=3)
+
+    if xlims is None:
+        xlims = [100/len(id_train)*0.9, 1]
+    ax.set_xlim(xlims)
+
+    if ylims is None:
+        ylims = [0.4, 1]
+    ax.set_ylim(ylims)
+
+
+
+    ax.set_xscale('log')
+    ax.set_xlabel('Fraction of the full training set')
+
+    # add the upper x axis for the number of training data
+    ax2 = ax.twiny()
+    xlims = ax.get_xlim()
+    ax2.set_xlim([xlims[0]*len(id_train), xlims[1]*len(id_train)])
+    ax2.set_xscale('log')
+    ax2.set_xlabel('Training set size')
+    ax2.tick_params(axis='x', which='major', pad=0)
+
+    if metrics_name == 'r2':
+        ax.set_ylabel('$R^2$')
+    else:
+        ax.set_ylabel(f'{metrics_name.upper()} (eV/atom)')
+
+    if ax_in is None:
+        ax.legend(loc='upper center')
+        ax.grid(linewidth=0.1)
+    return fig, ax
