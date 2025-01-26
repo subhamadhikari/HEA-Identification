@@ -1,3 +1,10 @@
 pyarrow
-pandas[performance, parquet, aws]
+numpy
+matplotlib
+pandas
 pendulum
+fastapi
+uvicorn
+streamlit
+xgboost
+scikit-learn

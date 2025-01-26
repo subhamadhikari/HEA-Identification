@@ -17,7 +17,7 @@ Subham Adhikari
 - None at this time.
 
 ## High Level Next Steps
-- Enhance the model accuracy by experimenting with different algorithms and feature selection methods.
+- Enhance the model accuracy by experimenting with Linear Rgression and XgBoost algorithms and feature selection methods.
 - Improve data processing and feature engineering to better capture relevant alloy characteristics.
 
 

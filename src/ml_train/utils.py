@@ -3,6 +3,7 @@ import time
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
@@ -151,22 +152,40 @@ def plot_metrics_vs_size(metrics, metrics_name,id_train,
                          fig_ax = None,
                          markers=None
                          ):
+    """
+    Plot the performance metrics of different models against the size of the training set.
+
+    This function creates a plot displaying how a specified performance metric (e.g., RMSE, MAE, R-squared)
+    varies as the size of the training set changes. It can handle multiple models and allows customization
+    of the axes, markers, and figure size.
+
+    Parameters:
+    - metrics (dict): A dictionary where keys are model names and values are DataFrames containing metrics.
+                      Each DataFrame should have the metrics name and its corresponding standard deviation.
+    - metrics_name (str): The name of the metric to plot (e.g., 'rmse', 'mae', 'r2').
+    - id_train (list): The list of training data identifiers, used to determine the size of the training set.
+    - xlims (list): Optional; limits for the x-axis (training set fraction).
+    - ylims (list): Optional; limits for the y-axis (metric value).
+    - figsize (tuple): Size of the figure (width, height) in inches. Default is (4, 4).
+    - ax_in (matplotlib.axes.Axes): Optional; if provided, use this Axes object for plotting instead of creating a new one.
+    - fig_ax (tuple): Optional; a tuple of (figure, Axes) to use for plotting.
+    - markers (dict): Optional; a dictionary mapping model names to marker styles for the plot. If None, default markers are used.
+
+    Returns:
+    - tuple: A tuple containing the figure and Axes objects used for the plot.
+    """
     if fig_ax is not None:
         fig, ax = fig_ax
     elif ax_in is None:
         fig, ax = plt.subplots(figsize=figsize)
     else:
         fig = ax_in.get_figure()
-        # get second y axis
         ax = ax_in.twinx()
 
 
     if markers is None:
         markers = {'RF':'o',
                    'XGB':'s'}
-        # markers = {'RF':'o',
-        #            'XGB':'s',
-        #            'alignn50':'^',}
 
 
     for model_name in metrics.keys():

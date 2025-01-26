@@ -7,9 +7,10 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-
 def load_model():
-    """Load machine learning models from disk."""
+    """
+    Load machine learning models from disk.
+    """
     # xgb_interpolate_model = pickle.load(open("model/model_xgb.pkl", "rb"))
     # xgb_extrapolate_model = pickle.load(open("model/xgb-extrapoltae.pkl", "rb"))
     # rf_extrapolate_model = pickle.load(open("model/rf-extrapolate.pkl", "rb"))
@@ -32,7 +33,10 @@ load_model()
 
 
 class ResponseModel(BaseModel):
-    """Model for API response containing a name and value."""
+    """
+    Model for API response containing a name and value.
+    """
+
     name: str
     value: float
 
@@ -40,7 +44,7 @@ class ResponseModel(BaseModel):
 # interpolate - xgb
 
 
-@app.get("/predict", response_model=ResponseModel)
+@app.get("/predict-xgb_interpolate", response_model=ResponseModel)
 async def make_prediction_xgb_in(x_in):
     """
     Predict the energy formation based on the model type and input index.
@@ -78,7 +82,7 @@ async def make_prediction_rf_in(x_in):
     input_data = input_data.apply(pd.to_numeric, errors="coerce")
     result = app.rf_inter.predict(input_data)
     print(result)
-    print("xgb interpolate model has been successfully loaded!")
+    print("RF interpolate model has been successfully loaded!")
     return ResponseModel(name="prediction", value=result[0])
 
 
@@ -125,7 +129,9 @@ async def make_prediction_rf_ex(x_in):
 
 
 def get_data():
-    """Prepare input data for prediction by converting it to DataFrame and cleaning it."""
+    """
+    Prepare input data for prediction by converting it to DataFrame and cleaning it.]
+    """
     testdata_inter = pd.read_csv("datasets/interpolate_test.csv").sample(n=5)
     testdata_extra = pd.read_csv("datasets/extrapolate_test.csv").sample(n=5)
     testdata_inter = json.loads(testdata_inter.to_json(orient="records"))

@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "allloy-detection"
 description = "This is the team alloy discovery project"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = "==3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -52,7 +52,7 @@ output-format="text"
 reports="no"
 
 [tool.mypy]
-python_version = 3.8
+python_version = 3.12
 warn_return_any = true
 warn_unused_configs = true
 ignore_missing_imports = true
