@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Allloy-Detection
 
 ## Introduction
@@ -69,3 +70,7 @@ If you have other packages installed in the environment that are no longer neede
 
 ## Evaluation Results
 Results are saved and displayed within the notebook. Specific metrics can be further analyzed by running the evaluation cells in the notebook.
+=======
+# HEA-Identification
+The project predicts the energy formation per atom.
+>>>>>>> 5d883eab0eb0d912f68cbd0a56d6b9c44f0e79a7
